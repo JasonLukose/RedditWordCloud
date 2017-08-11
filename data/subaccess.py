@@ -1,6 +1,7 @@
 
 import sys
 import praw
+import config
 from prawcore.exceptions import NotFound 
 from praw.exceptions import ClientException
 
@@ -10,21 +11,28 @@ class SubredditAccess(object):
         self.subredditName = sub_name.replace(' ', '')
         self.userAgent = "Subreddit Sentiment Analysis for /r/" + self.subredditName
         self.submissionLimit = 1000
+        self.validSub = False
 
     def setup(self):
-        self.redditInstance = praw.Reddit('ssa', user_agent=self.userAgent)
+        self.redditInstance = praw.Reddit(username = config.username,
+                                        password = config.password,
+                                        client_id = config.client_id,
+                                          client_secret = config.client_secret,
+                                          user_agent=self.userAgent)
+
         self.access_sub()
+        return self.subreddit
  
     def access_sub(self):
         self.validate_sub()
-        if (self.validSub):
+        if self.validSub:
             self.subreddit = self.redditInstance.subreddit(self.subredditName)    
         else:
             sys.exit(1) # Not necessary, remove later
     
     def validate_sub(self):
         self.validSub = False
-        try:
+        try: 
             response = self.redditInstance.subreddits.search_by_name(self.subredditName, exact=True)
             if len(response) == 0:
                 raise ClientException("Invalid input, must not be empty")
