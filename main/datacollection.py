@@ -12,7 +12,7 @@ class DataCollection(object):
 
     def __init__(self):
         self.USER_AGENT_URL = "Subreddit Word Cloud and Sentiment Analysis v0.1.0 for submission URLs"
-        self.OUTPUT_FILE = open("data.txt", "w+")
+        self.OUTPUT_FILE = open("data1.txt", "w+")
 
     def access_submissions_sub(self, subreddit_name, submission_limit=1000, comment_replace_limit=1, skip_sticky=True):
         subreddit_name = subreddit_name.replace(' ', '')
@@ -68,6 +68,5 @@ class DataCollection(object):
 
 if __name__ == "__main__":
     dc = DataCollection()
-    dc.access_submissions_sub("test", 3)
-    dc.access_submission_url("testurl")
+    dc.access_submissions_sub("gatech", 1000)
 

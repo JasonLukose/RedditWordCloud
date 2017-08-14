@@ -1,3 +1,5 @@
+*.png
+*.jpg
 *.txt
 *.pyc
 .idea
